@@ -25,6 +25,10 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.ENUM('available', 'not_available'),
         defaultValue: 'available',
       },
+      profile_image: {
+        type: DataTypes.STRING,
+        allowNull: true,
+      },
     },
     {
       tableName: 'service_providers',

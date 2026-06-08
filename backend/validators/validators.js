@@ -36,6 +36,7 @@ const serviceSchema = Joi.object({
   description: Joi.string().min(10).required(),
   price: Joi.number().positive().required(),
   duration: Joi.string().required(),
+  document_url: Joi.string().uri().allow('', null),
 }).options({ allowUnknown: true });
 
 const providerSchema = Joi.object({
@@ -50,6 +51,7 @@ const providerSchema = Joi.object({
       'any.required': 'Phone number is required',
     }),
   availabilitystatus: Joi.string().valid('available', 'not_available').required(),
+  profile_image: Joi.string().uri().allow('', null),
 }).options({ allowUnknown: true });
 
 const bookingSchema = Joi.object({

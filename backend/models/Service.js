@@ -26,6 +26,10 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         comment: 'e.g., "1 hour", "2 hours"',
       },
+      document_url: {
+        type: DataTypes.STRING,
+        allowNull: true,
+      },
     },
     {
       tableName: 'services',

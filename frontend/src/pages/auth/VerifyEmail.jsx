@@ -3,9 +3,11 @@ import { useNavigate, useLocation, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import toast from 'react-hot-toast';
 import { useAuth } from '../../context/AuthContext';
+import { useTranslation } from 'react-i18next';
 import LoadingSpinner from '../../components/common/LoadingSpinner';
 
 const VerifyEmail = () => {
+  const { t } = useTranslation();
   const { verifyEmail, resendCode, loading } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
@@ -16,12 +18,12 @@ const VerifyEmail = () => {
   const handleVerify = async (e) => {
     e.preventDefault();
     if (!email) {
-      toast.error('No email found. Please register again.');
+      toast.error(t('auth.verify.no_email'));
       return;
     }
     const result = await verifyEmail(email, code);
     if (result.success) {
-      toast.success('Email verified! Welcome aboard 🎉');
+      toast.success(t('auth.verify.success'));
       navigate(result.role === 'admin' ? '/admin' : '/dashboard');
     } else {
       toast.error(result.message);
@@ -30,12 +32,12 @@ const VerifyEmail = () => {
 
   const handleResend = async () => {
     if (!email) {
-      toast.error('No email found.');
+      toast.error(t('error.no_email_found'));
       return;
     }
     const result = await resendCode(email);
     if (result.success) {
-      toast.success('Code resent!');
+      toast.success(t('auth.verify.code_resent'));
     } else {
       toast.error(result.message);
     }
@@ -52,9 +54,9 @@ const VerifyEmail = () => {
           <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-gradient-to-br from-orange-400 to-pink-400 flex items-center justify-center shadow-lg">
             <span className="text-3xl">📧</span>
           </div>
-          <h1 className="text-3xl font-bold text-gray-800">Verify Email</h1>
+          <h1 className="text-3xl font-bold text-gray-800">{t('auth.verify.heading')}</h1>
           <p className="text-gray-500 mt-1">
-            Enter the 6-digit code sent to <strong>{email}</strong>
+            {t('auth.verify.subtitle')} <strong>{email}</strong>
           </p>
         </motion.div>
 
@@ -66,12 +68,12 @@ const VerifyEmail = () => {
         >
           <form onSubmit={handleVerify} className="space-y-4">
             <div>
-              <label htmlFor="verify-code" className="label">Verification Code</label>
+              <label htmlFor="verify-code" className="label">{t('auth.verify.code_label')}</label>
               <input
                 id="verify-code"
                 type="text"
                 maxLength={6}
-                placeholder="000000"
+                placeholder={t('auth.verify.code_placeholder')}
                 className="input-field text-center text-2xl tracking-[8px]"
                 value={code}
                 onChange={(e) => setCode(e.target.value.replace(/\D/g, '').slice(0, 6))}
@@ -86,10 +88,10 @@ const VerifyEmail = () => {
               {loading ? (
                 <span className="flex items-center justify-center gap-2">
                   <LoadingSpinner size="sm" />
-                  Verifying...
+                  {t('auth.verify.verifying')}
                 </span>
               ) : (
-                'Verify Email'
+                t('auth.verify.verify_btn')
               )}
             </button>
           </form>
@@ -100,14 +102,14 @@ const VerifyEmail = () => {
               disabled={loading}
               className="text-orange-500 font-semibold hover:text-orange-600 transition-colors text-sm"
             >
-              Resend code
+              {t('auth.verify.resend')}
             </button>
           </div>
 
           <div className="mt-6 text-center">
             <p className="text-gray-500 text-sm">
               <Link to="/login" className="text-orange-500 font-semibold hover:text-orange-600 transition-colors">
-                Back to login
+                {t('auth.verify.back_to_login')}
               </Link>
             </p>
           </div>

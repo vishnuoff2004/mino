@@ -1,6 +1,9 @@
 const { Service } = require('../models');
 const { serviceSchema } = require('../validators/validators');
 const { Op } = require('sequelize');
+const { minioClient, BUCKET_NAME, ensureBucket, getFileUrl } = require('../utils/minioClient');
+const crypto = require('crypto');
+const path = require('path');
 
 exports.getAllServices = async (req, res, next) => {
   try {
@@ -55,8 +58,26 @@ exports.createService = async (req, res, next) => {
       return res.status(400).json({ message: error.details[0].message });
     }
 
+    let documentUrl = value.document_url || null;
+
+    if (req.file) {
+      await ensureBucket();
+      const ext = path.extname(req.file.originalname);
+      const fileName = `services/${crypto.randomUUID()}${ext}`;
+      await minioClient.putObject(BUCKET_NAME, fileName, req.file.buffer, req.file.size, {
+        'Content-Type': req.file.mimetype,
+      });
+      documentUrl = getFileUrl(fileName);
+    }
+
     const { name, description, price, duration } = value;
-    const service = await Service.create({ name, description, price, duration });
+    const service = await Service.create({
+      name,
+      description,
+      price,
+      duration,
+      document_url: documentUrl,
+    });
     res.status(201).json({ message: 'Service created successfully.', service });
   } catch (error) {
     next(error);
@@ -75,8 +96,26 @@ exports.updateService = async (req, res, next) => {
       return res.status(404).json({ message: 'Service not found.' });
     }
 
+    let documentUrl = service.document_url;
+
+    if (req.file) {
+      await ensureBucket();
+      const ext = path.extname(req.file.originalname);
+      const fileName = `services/${crypto.randomUUID()}${ext}`;
+      await minioClient.putObject(BUCKET_NAME, fileName, req.file.buffer, req.file.size, {
+        'Content-Type': req.file.mimetype,
+      });
+      documentUrl = getFileUrl(fileName);
+    }
+
     const { name, description, price, duration } = value;
-    await service.update({ name, description, price, duration });
+    await service.update({
+      name,
+      description,
+      price,
+      duration,
+      document_url: documentUrl,
+    });
     res.json({ message: 'Service updated successfully.', service });
   } catch (error) {
     next(error);

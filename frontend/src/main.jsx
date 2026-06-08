@@ -3,6 +3,7 @@ import { createRoot } from 'react-dom/client'
 import * as Sentry from '@sentry/react'
 import './index.css'
 import App from './App.jsx'
+import i18n from './i18n/index.js'
 
 Sentry.init({
   dsn: import.meta.env.VITE_SENTRY_DSN,
@@ -12,7 +13,7 @@ Sentry.init({
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <Sentry.ErrorBoundary fallback={<p>An unexpected error occurred.</p>}>
+    <Sentry.ErrorBoundary fallback={<p>{i18n.t('error.unexpected')}</p>}>
       <App />
     </Sentry.ErrorBoundary>
   </StrictMode>,

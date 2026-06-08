@@ -1,6 +1,9 @@
 const { Provider } = require('../models');
 const { providerSchema } = require('../validators/validators');
 const { Op } = require('sequelize');
+const { minioClient, BUCKET_NAME, ensureBucket, getFileUrl } = require('../utils/minioClient');
+const crypto = require('crypto');
+const path = require('path');
 
 exports.getAllProviders = async (req, res, next) => {
   try {
@@ -15,7 +18,10 @@ exports.getAllProviders = async (req, res, next) => {
       ];
     }
     if (skill_type) {
-      where.skill_type = { [Op.like]: `%${skill_type}%` };
+      where[Op.or] = [
+        ...(where[Op.or] || []),
+        { skill_type: { [Op.like]: `%${skill_type}%` } },
+      ];
     }
 
     const { count, rows } = await Provider.findAndCountAll({
@@ -58,8 +64,26 @@ exports.createProvider = async (req, res, next) => {
       return res.status(400).json({ message: error.details[0].message });
     }
 
+    let profileImageUrl = value.profile_image || null;
+
+    if (req.file) {
+      await ensureBucket();
+      const ext = path.extname(req.file.originalname);
+      const fileName = `providers/${crypto.randomUUID()}${ext}`;
+      await minioClient.putObject(BUCKET_NAME, fileName, req.file.buffer, req.file.size, {
+        'Content-Type': req.file.mimetype,
+      });
+      profileImageUrl = getFileUrl(fileName);
+    }
+
     const { name, skill_type, phoneno, availabilitystatus } = value;
-    const provider = await Provider.create({ name, skill_type, phoneno, availabilitystatus });
+    const provider = await Provider.create({
+      name,
+      skill_type,
+      phoneno,
+      availabilitystatus,
+      profile_image: profileImageUrl,
+    });
     res.status(201).json({ message: 'Provider created successfully.', provider });
   } catch (error) {
     next(error);
@@ -78,8 +102,26 @@ exports.updateProvider = async (req, res, next) => {
       return res.status(404).json({ message: 'Provider not found.' });
     }
 
+    let profileImageUrl = provider.profile_image;
+
+    if (req.file) {
+      await ensureBucket();
+      const ext = path.extname(req.file.originalname);
+      const fileName = `providers/${crypto.randomUUID()}${ext}`;
+      await minioClient.putObject(BUCKET_NAME, fileName, req.file.buffer, req.file.size, {
+        'Content-Type': req.file.mimetype,
+      });
+      profileImageUrl = getFileUrl(fileName);
+    }
+
     const { name, skill_type, phoneno, availabilitystatus } = value;
-    await provider.update({ name, skill_type, phoneno, availabilitystatus });
+    await provider.update({
+      name,
+      skill_type,
+      phoneno,
+      availabilitystatus,
+      profile_image: profileImageUrl,
+    });
     res.json({ message: 'Provider updated successfully.', provider });
   } catch (error) {
     next(error);

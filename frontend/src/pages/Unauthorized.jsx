@@ -1,8 +1,10 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useAuth } from '../context/AuthContext';
+import { useTranslation } from 'react-i18next';
 
 const Unauthorized = () => {
+  const { t } = useTranslation();
   const { isAuthenticated, isAdmin } = useAuth();
   const navigate = useNavigate();
 
@@ -27,9 +29,9 @@ const Unauthorized = () => {
           🚫
         </motion.div>
 
-        <h1 className="text-4xl font-bold text-gray-800 mb-3">Access Denied</h1>
+        <h1 className="text-4xl font-bold text-gray-800 mb-3">{t('unauthorized.title')}</h1>
         <p className="text-gray-500 text-lg mb-8">
-          You don't have permission to view this page. This area is restricted to authorized personnel only.
+          {t('unauthorized.message')}
         </p>
 
         <div className="flex flex-col sm:flex-row gap-3 justify-center">
@@ -38,16 +40,16 @@ const Unauthorized = () => {
             onClick={handleGoBack}
             className="btn-primary"
           >
-            ← Go Back
+            {t('unauthorized.go_back')}
           </button>
           <Link to="/login" className="btn-secondary">
-            Sign in with different account
+            {t('unauthorized.switch_account')}
           </Link>
         </div>
 
         <div className="mt-8 p-4 bg-white/70 rounded-2xl border border-cream-200">
           <p className="text-sm text-gray-500">
-            If you believe this is an error, please contact your administrator.
+            {t('unauthorized.contact_admin')}
           </p>
         </div>
       </motion.div>

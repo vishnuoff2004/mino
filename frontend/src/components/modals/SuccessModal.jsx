@@ -1,7 +1,9 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 const SuccessModal = ({ isOpen, onClose, title, message, redirectTo }) => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
 
   const handleClose = () => {
@@ -58,7 +60,7 @@ const SuccessModal = ({ isOpen, onClose, title, message, redirectTo }) => {
               transition={{ delay: 0.5 }}
               className="text-2xl font-bold text-gray-800 mb-2"
             >
-              {title || 'Success!'}
+              {title || t('success.title')}
             </motion.h2>
 
             <motion.p
@@ -67,7 +69,7 @@ const SuccessModal = ({ isOpen, onClose, title, message, redirectTo }) => {
               transition={{ delay: 0.6 }}
               className="text-gray-500 mb-8"
             >
-              {message || 'Operation completed successfully.'}
+              {message || t('success.message')}
             </motion.p>
 
             <motion.button
@@ -78,7 +80,7 @@ const SuccessModal = ({ isOpen, onClose, title, message, redirectTo }) => {
               id="success-modal-close"
               className="btn-primary w-full"
             >
-              {redirectTo ? 'View My Bookings →' : 'Close'}
+              {redirectTo ? t('success.view_bookings') : t('success.close')}
             </motion.button>
           </motion.div>
         </motion.div>

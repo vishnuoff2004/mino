@@ -3,12 +3,15 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import api from '../../api/axios';
 import useDebounce from '../../hooks/useDebounce';
+import { useTranslation } from 'react-i18next';
+import { tl } from '../../utils/translate';
 import StatusBadge from '../../components/common/StatusBadge';
 import LoadingSpinner from '../../components/common/LoadingSpinner';
 import SkeletonCard from '../../components/common/SkeletonCard';
 import toast from 'react-hot-toast';
 
 const Providers = () => {
+  const { t, i18n } = useTranslation();
   const location = useLocation();
   const navigate = useNavigate();
   const service = location.state?.service;
@@ -22,6 +25,7 @@ const Providers = () => {
   const [submitting, setSubmitting] = useState(false);
 
   const debouncedSearch = useDebounce(search, 400);
+  const lang = i18n.language;
 
   useEffect(() => {
     if (!service) {
@@ -49,12 +53,12 @@ const Providers = () => {
   }, [service, debouncedSearch]);
 
   const handleConfirmBooking = async () => {
-    if (!selectedProvider) return toast.error('Please select a provider');
-    if (!bookingDate) return toast.error('Please select a booking date');
-    if (!address.trim()) return toast.error('Please enter your address');
+    if (!selectedProvider) return toast.error(t('providers.error_select'));
+    if (!bookingDate) return toast.error(t('providers.error_date'));
+    if (!address.trim()) return toast.error(t('providers.error_address'));
 
     const today = new Date().toISOString().split('T')[0];
-    if (bookingDate < today) return toast.error('Booking date must be today or in the future');
+    if (bookingDate < today) return toast.error(t('providers.error_future'));
 
     setSubmitting(true);
     try {
@@ -65,9 +69,9 @@ const Providers = () => {
         address,
       });
       navigate('/bookings', { state: { success: true } });
-      toast.success('Booking confirmed! 🎉');
+      toast.success(t('providers.confirmed'));
     } catch (err) {
-      toast.error(err.response?.data?.message || 'Failed to create booking');
+      toast.error(err.response?.data?.message || t('error.booking_failed'));
     } finally {
       setSubmitting(false);
     }
@@ -88,9 +92,9 @@ const Providers = () => {
           ←
         </button>
         <div>
-          <h1 className="page-title">Choose a Provider</h1>
+          <h1 className="page-title">{t('providers.title')}</h1>
           <p className="section-subtitle">
-            Service: <strong className="text-orange-600">{service.name}</strong> · ${parseFloat(service.price).toFixed(2)} · {service.duration}
+            {t('providers.service_label')} <strong className="text-orange-600">{tl(service, 'name', lang, t)}</strong> · ${parseFloat(service.price).toFixed(2)} · {service.duration}
           </p>
         </div>
       </div>
@@ -101,7 +105,7 @@ const Providers = () => {
         <input
           id="providers-search"
           type="text"
-          placeholder="Search providers..."
+          placeholder={t('providers.search')}
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           className="input-field pl-12"
@@ -116,8 +120,8 @@ const Providers = () => {
       ) : providers.length === 0 ? (
         <div className="text-center py-16">
           <span className="text-6xl">👷</span>
-          <p className="mt-4 text-xl font-semibold text-gray-700">No providers found</p>
-          <p className="text-gray-500">There are no providers available for this service yet.</p>
+          <p className="mt-4 text-xl font-semibold text-gray-700">{t('providers.none_found')}</p>
+          <p className="text-gray-500">{t('providers.none_found_desc')}</p>
         </div>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -145,8 +149,8 @@ const Providers = () => {
                 </div>
                 <StatusBadge status={provider.availabilitystatus} />
               </div>
-              <h3 className="font-bold text-gray-800">{provider.name}</h3>
-              <p className="text-sm text-gray-500 mt-1">🔧 {provider.skill_type}</p>
+              <h3 className="font-bold text-gray-800">{tl(provider, 'name', lang, t)}</h3>
+              <p className="text-sm text-gray-500 mt-1">🔧 {tl(provider, 'skill_type', lang, t)}</p>
               <p className="text-sm text-gray-500">📞 {provider.phoneno}</p>
               {selectedProvider?.id === provider.id && (
                 <motion.div
@@ -154,7 +158,7 @@ const Providers = () => {
                   animate={{ scale: 1 }}
                   className="mt-3 text-orange-500 font-semibold text-sm"
                 >
-                  ✓ Selected
+                  {t('providers.selected')}
                 </motion.div>
               )}
             </motion.div>
@@ -169,10 +173,10 @@ const Providers = () => {
           animate={{ opacity: 1, y: 0 }}
           className="card border-2 border-orange-200 bg-gradient-to-r from-orange-50 to-amber-50"
         >
-          <h2 className="text-lg font-bold text-gray-800 mb-4">📅 Complete Your Booking</h2>
+          <h2 className="text-lg font-bold text-gray-800 mb-4">{t('providers.booking_heading')}</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label htmlFor="booking-date" className="label">Booking Date</label>
+              <label htmlFor="booking-date" className="label">{t('providers.booking_date')}</label>
               <input
                 id="booking-date"
                 type="date"
@@ -183,11 +187,11 @@ const Providers = () => {
               />
             </div>
             <div>
-              <label htmlFor="booking-address" className="label">Service Address</label>
+              <label htmlFor="booking-address" className="label">{t('providers.address_label')}</label>
               <input
                 id="booking-address"
                 type="text"
-                placeholder="Enter your full address"
+                placeholder={t('providers.address_placeholder')}
                 value={address}
                 onChange={(e) => setAddress(e.target.value)}
                 className="input-field"
@@ -196,12 +200,12 @@ const Providers = () => {
           </div>
 
           <div className="mt-4 p-4 bg-white rounded-xl border border-cream-200">
-            <p className="font-semibold text-gray-800 mb-2">Booking Summary</p>
+            <p className="font-semibold text-gray-800 mb-2">{t('providers.summary')}</p>
             <div className="space-y-1 text-sm text-gray-600">
-              <p>🛠️ Service: <strong>{service.name}</strong></p>
-              <p>👷 Provider: <strong>{selectedProvider.name}</strong></p>
-              <p>💰 Price: <strong className="text-orange-600">${parseFloat(service.price).toFixed(2)}</strong></p>
-              <p>⏱️ Duration: <strong>{service.duration}</strong></p>
+              <p>{t('providers.summary_service')} <strong>{tl(service, 'name', lang, t)}</strong></p>
+              <p>{t('providers.summary_provider')} <strong>{tl(selectedProvider, 'name', lang, t)}</strong></p>
+              <p>{t('providers.summary_price')} <strong className="text-orange-600">${parseFloat(service.price).toFixed(2)}</strong></p>
+              <p>{t('providers.summary_duration')} <strong>{service.duration}</strong></p>
             </div>
           </div>
 
@@ -214,10 +218,10 @@ const Providers = () => {
             {submitting ? (
               <span className="flex items-center justify-center gap-2">
                 <LoadingSpinner size="sm" />
-                Confirming Booking...
+                {t('providers.confirming')}
               </span>
             ) : (
-              '✅ Confirm Booking'
+              t('providers.confirm_btn')
             )}
           </button>
         </motion.div>

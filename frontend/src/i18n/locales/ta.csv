@@ -1,0 +1,320 @@
+key,en,ta
+# Navbar
+nav.open_menu,Open menu,மெனுவைத் திற
+nav.dashboard,Dashboard,டாஷ்போர்டு
+nav.logout,Logout,வெளியேறு
+
+# Sidebar
+sidebar.admin_panel,Admin Panel,நிர்வாக குழு
+sidebar.navigation,Navigation,வழிசெலுத்தல்
+sidebar.dashboard,Dashboard,டாஷ்போர்டு
+sidebar.services,Services,சேவைகள்
+sidebar.bookings,My Bookings,எனது முன்பதிவுகள்
+sidebar.manage_services,Manage Services,சேவைகளை நிர்வகி
+sidebar.manage_providers,Manage Providers,வழங்குநர்களை நிர்வகி
+sidebar.manage_bookings,Manage Bookings,முன்பதிவுகளை நிர்வகி
+sidebar.footer,BookEase v1.0 · Built with ❤️,BookEase v1.0 · அன்புடன் உருவாக்கப்பட்டது
+
+# Auth - Login
+auth.login.title,BookEase,BookEase
+auth.login.subtitle,Your trusted booking platform,உங்கள் நம்பகமான முன்பதிவு தளம்
+auth.login.heading,Welcome back,மீண்டும் வரவேற்கிறோம்
+auth.login.email_label,Email address,மின்னஞ்சல் முகவரி
+auth.login.email_placeholder,you@example.com,you@example.com
+auth.login.password_label,Password,கடவுச்சொல்
+auth.login.password_placeholder,Enter your password,உங்கள் கடவுச்சொல்லை உள்ளிடவும்
+auth.login.signing_in,Signing in...,உள்நுழைகிறது...
+auth.login.sign_in,Sign in,உள்நுழைக
+auth.login.no_account,Don't have an account?,கணக்கு இல்லையா?
+auth.login.create_account,Create account,கணக்கை உருவாக்கு
+auth.login.demo_heading,Demo credentials:,டெமோ சான்றுகள்:
+auth.login.demo_text,Admin: admin@booking.com / admin123,நிர்வாகி: admin@booking.com / admin123
+
+# Auth - Register
+auth.register.subtitle,Join thousands of happy customers,ஆயிரக்கணக்கான மகிழ்ச்சியான வாடிக்கையாளர்களுடன் சேருங்கள்
+auth.register.heading,Create account,கணக்கை உருவாக்கு
+auth.register.name_label,Full Name,முழு பெயர்
+auth.register.name_placeholder,John Doe,John Doe
+auth.register.email_label,Email address,மின்னஞ்சல் முகவரி
+auth.register.email_placeholder,you@example.com,you@example.com
+auth.register.password_label,Password,கடவுச்சொல்
+auth.register.password_placeholder,Min 6 characters,குறைந்தது 6 எழுத்துகள்
+auth.register.confirm_label,Confirm Password,கடவுச்சொல்லை உறுதிப்படுத்து
+auth.register.confirm_placeholder,Repeat your password,கடவுச்சொல்லை மீண்டும் உள்ளிடவும்
+auth.register.creating,Creating account...,கணக்கு உருவாக்கப்படுகிறது...
+auth.register.create_btn,Create account,கணக்கை உருவாக்கு
+auth.register.has_account,Already have an account?,ஏற்கனவே கணக்கு உள்ளதா?
+auth.register.sign_in,Sign in,உள்நுழைக
+
+# Auth - Verify
+auth.verify.title,Verify Email,மின்னஞ்சலை சரிபார்க்கவும்
+auth.verify.heading,Verify Email,மின்னஞ்சலை சரிபார்க்கவும்
+auth.verify.subtitle,Enter the 6-digit code sent to,இதற்கு அனுப்பப்பட்ட 6 இலக்க குறியீட்டை உள்ளிடவும்
+auth.verify.code_label,Verification Code,சரிபார்ப்பு குறியீடு
+auth.verify.code_placeholder,000000,000000
+auth.verify.verifying,Verifying...,சரிபார்க்கிறது...
+auth.verify.verify_btn,Verify Email,மின்னஞ்சலை சரிபார்
+auth.verify.resend,Resend code,குறியீட்டை மீண்டும் அனுப்பு
+auth.verify.back_to_login,Back to login,உள்நுழைவுக்குத் திரும்பு
+auth.verify.no_email,No email found. Please register again,மின்னஞ்சல் எதுவும் இல்லை. மீண்டும் பதிவு செய்யவும்
+auth.verify.success,Email verified! Welcome aboard 🎉,மின்னஞ்சல் சரிபார்க்கப்பட்டது! வரவேற்கிறோம் 🎉
+auth.verify.code_resent,Code resent!,குறியீடு மீண்டும் அனுப்பப்பட்டது!
+
+# Validation messages
+validation.email_invalid,Invalid email address,தவறான மின்னஞ்சல் முகவரி
+validation.email_required,Email is required,மின்னஞ்சல் தேவை
+validation.password_min,Password must be at least 6 characters,கடவுச்சொல் குறைந்தது 6 எழுத்துகளாக இருக்க வேண்டும்
+validation.password_required,Password is required,கடவுச்சொல் தேவை
+validation.name_min,Name must be at least 2 characters,பெயர் குறைந்தது 2 எழுத்துகளாக இருக்க வேண்டும்
+validation.name_required,Name is required,பெயர் தேவை
+validation.confirm_required,Please confirm your password,உங்கள் கடவுச்சொல்லை உறுதிப்படுத்தவும்
+validation.confirm_match,Passwords do not match,கடவுச்சொற்கள் பொருந்தவில்லை
+validation.name_required_admin,Name is required,பெயர் தேவை
+validation.skill_type_required,Skill type is required,திறன் வகை தேவை
+validation.phone_required,Phone number is required,தொலைபேசி எண் தேவை
+validation.price_required,Price is required,விலை தேவை
+validation.price_positive,Price must be positive,விலை நேர்மறையாக இருக்க வேண்டும்
+validation.duration_required,Duration is required,கால அளவு தேவை
+validation.description_required,Description is required,விளக்கம் தேவை
+validation.description_min,Description must be at least 10 characters,விளக்கம் குறைந்தது 10 எழுத்துகளாக இருக்க வேண்டும்
+
+# User Dashboard
+dashboard.user.greeting,Good morning, {{name}}! 👋,காலை வணக்கம், {{name}}! 👋
+dashboard.user.subtitle,Here's what's happening with your bookings today.,உங்கள் முன்பதிவுகளின் நிலை இங்கே.
+dashboard.user.loading,Loading your dashboard...,உங்கள் டாஷ்போர்டு ஏற்றப்படுகிறது...
+dashboard.user.total_bookings,Total Bookings,மொத்த முன்பதிவுகள்
+dashboard.user.upcoming,Upcoming,வரவிருக்கும்
+dashboard.user.completed,Completed,நிறைவடைந்தது
+dashboard.user.cancelled,Cancelled,ரத்து செய்யப்பட்டது
+dashboard.user.quick_actions,Quick Actions,விரைவு செயல்கள்
+dashboard.user.book_service,Book a Service,சேவையை முன்பதிவு செய்
+dashboard.user.book_service_desc,Browse available services,கிடைக்கும் சேவைகளைப் பார்க்கவும்
+dashboard.user.my_bookings,My Bookings,எனது முன்பதிவுகள்
+dashboard.user.view_bookings_desc,View all your bookings,உங்கள் அனைத்து முன்பதிவுகளையும் காண்க
+dashboard.user.support,Support,ஆதரவு
+dashboard.user.support_desc,Get help anytime,எப்போது வேண்டுமானாலும் உதவி பெறவும்
+dashboard.user.recent_bookings,Recent Bookings,சமீபத்திய முன்பதிவுகள்
+dashboard.user.view_all,View all →,அனைத்தையும் காண்க →
+dashboard.user.no_bookings,No bookings yet,இன்னும் முன்பதிவுகள் இல்லை
+dashboard.user.no_bookings_desc,Book your first service to get started!,தொடங்க உங்கள் முதல் சேவையை முன்பதிவு செய்யுங்கள்!
+dashboard.user.browse_services,Browse Services,சேவைகளை உலாவுக
+
+# Admin Dashboard
+dashboard.admin.title,Admin Dashboard 🛡️,நிர்வாக டாஷ்போர்டு 🛡️
+dashboard.admin.subtitle,Overview of your booking platform,உங்கள் முன்பதிவு தளத்தின் கண்ணோட்டம்
+dashboard.admin.loading,Loading admin dashboard...,நிர்வாக டாஷ்போர்டு ஏற்றப்படுகிறது...
+dashboard.admin.total_bookings,Total Bookings,மொத்த முன்பதிவுகள்
+dashboard.admin.revenue,Revenue Generated,ஈட்டப்பட்ட வருவாய்
+dashboard.admin.total_providers,Total Providers,மொத்த வழங்குநர்கள்
+dashboard.admin.available_now,Available Now,இப்போது கிடைக்கும்
+dashboard.admin.by_status,Bookings by Status,நிலை வாரியாக முன்பதிவுகள்
+dashboard.admin.recent_bookings,Recent Bookings,சமீபத்திய முன்பதிவுகள்
+dashboard.admin.table_id,#,#
+dashboard.admin.table_customer,Customer,வாடிக்கையாளர்
+dashboard.admin.table_service,Service,சேவை
+dashboard.admin.table_provider,Provider,வழங்குநர்
+dashboard.admin.table_date,Date,தேதி
+dashboard.admin.table_status,Status,நிலை
+dashboard.admin.no_bookings,No bookings yet.,இன்னும் முன்பதிவுகள் இல்லை.
+
+# Services
+services.title,Our Services,எங்கள் சேவைகள்
+services.subtitle,Find the perfect service for your needs,உங்கள் தேவைக்கான சரியான சேவையைக் கண்டறியவும்
+services.search,Search services...,சேவைகளைத் தேடு...
+services.none_found,No services found,சேவைகள் எதுவும் இல்லை
+services.none_found_desc,Try a different search term,வேறு தேடல் சொல்லை முயற்சிக்கவும்
+services.clear_search,Clear search,தேடலை அழி
+services.view_document,📄 View Document,📄 ஆவணத்தைக் காண்க
+services.book_now,Book Now,இப்போது முன்பதிவு செய்
+services.page_info,Page {{page}} of {{totalPages}},பக்கம் {{page}} / {{totalPages}}
+
+# Providers
+providers.title,Choose a Provider,வழங்குநரைத் தேர்வு செய்யவும்
+providers.service_label,Service:,சேவை:
+providers.search,Search providers...,வழங்குநர்களைத் தேடு...
+providers.none_found,No providers found,வழங்குநர்கள் எதுவும் இல்லை
+providers.none_found_desc,There are no providers available for this service yet.,இந்த சேவைக்கு இன்னும் வழங்குநர்கள் இல்லை.
+providers.selected,✓ Selected,✓ தேர்வு செய்யப்பட்டது
+providers.booking_heading,📅 Complete Your Booking,📅 உங்கள் முன்பதிவை நிறைவு செய்யவும்
+providers.booking_date,Booking Date,முன்பதிவு தேதி
+providers.address_label,Service Address,சேவை முகவரி
+providers.address_placeholder,Enter your full address,உங்கள் முழு முகவரியை உள்ளிடவும்
+providers.summary,Booking Summary,முன்பதிவு சுருக்கம்
+providers.summary_service,Service:,சேவை:
+providers.summary_provider,Provider:,வழங்குநர்:
+providers.summary_price,Price:,விலை:
+providers.summary_duration,Duration:,கால அளவு:
+providers.confirming,Confirming Booking...,முன்பதிவு உறுதிப்படுத்தப்படுகிறது...
+providers.confirm_btn,✅ Confirm Booking,✅ முன்பதிவை உறுதிப்படுத்து
+providers.error_select,Please select a provider,தயவுசெய்து வழங்குநரைத் தேர்ந்தெடுக்கவும்
+providers.error_date,Please select a booking date,தயவுசெய்து முன்பதிவு தேதியைத் தேர்ந்தெடுக்கவும்
+providers.error_address,Please enter your address,தயவுசெய்து உங்கள் முகவரியை உள்ளிடவும்
+providers.error_future,Booking date must be today or in the future,முன்பதிவு தேதி இன்று அல்லது எதிர்காலத்தில் இருக்க வேண்டும்
+providers.confirmed,Booking confirmed! 🎉,முன்பதிவு உறுதி செய்யப்பட்டது! 🎉
+
+# My Bookings
+bookings.title,My Bookings,எனது முன்பதிவுகள்
+bookings.subtitle,Track all your service bookings,உங்கள் அனைத்து சேவை முன்பதிவுகளையும் கண்காணிக்கவும்
+bookings.none,No bookings yet,இன்னும் முன்பதிவுகள் இல்லை
+bookings.none_desc,Start by booking a service!,ஒரு சேவையை முன்பதிவு செய்வதன் மூலம் தொடங்குங்கள்!
+bookings.browse,Browse Services,சேவைகளை உலாவுக
+bookings.table_id,#,#
+bookings.table_service,Service,சேவை
+bookings.table_provider,Provider,வழங்குநர்
+bookings.table_date,Date,தேதி
+bookings.table_address,Address,முகவரி
+bookings.table_status,Status,நிலை
+bookings.showing,Showing page {{page}} of {{totalPages}} ({{total}} bookings),பக்கம் {{page}} / {{totalPages}} ({{total}} முன்பதிவுகள்)
+bookings.prev,← Prev,← முந்தைய
+bookings.next,Next →,அடுத்து →
+
+# Manage Services (Admin)
+admin.services.title,Manage Services,சேவைகளை நிர்வகி
+admin.services.subtitle,Create, edit and delete services,சேவைகளை உருவாக்கவும் திருத்தவும் நீக்கவும்
+admin.services.add_btn,+ Add Service,+ சேவையைச் சேர்
+admin.services.table_id,#,#
+admin.services.table_name,Name,பெயர்
+admin.services.table_description,Description,விளக்கம்
+admin.services.table_price,Price,விலை
+admin.services.table_duration,Duration,கால அளவு
+admin.services.table_document,Document,ஆவணம்
+admin.services.table_actions,Actions,செயல்கள்
+admin.services.edit,✏️ Edit,✏️ திருத்து
+admin.services.delete,🗑️ Delete,🗑️ நீக்கு
+admin.services.none,No services found.,சேவைகள் எதுவும் இல்லை.
+admin.services.view_pdf,📄 View PDF,📄 PDF ஐக் காண்க
+admin.services.modal_add,➕ Add Service,➕ சேவையைச் சேர்
+admin.services.modal_edit,✏️ Edit Service,✏️ சேவையைத் திருத்து
+admin.services.field_name,Service Name,சேவை பெயர்
+admin.services.field_name_placeholder,e.g. Home Cleaning,எ.கா. வீட்டை சுத்தம் செய்தல்
+admin.services.field_description,Description,விளக்கம்
+admin.services.field_description_placeholder,Describe the service...,சேவையை விவரிக்கவும்...
+admin.services.field_price,Price ($),விலை ($)
+admin.services.field_price_placeholder,49.99,49.99
+admin.services.field_duration,Duration,கால அளவு
+admin.services.field_duration_placeholder,e.g. 2 hours,எ.கா. 2 மணி நேரம்
+admin.services.field_document,Document (PDF only),ஆவணம் (PDF மட்டும்)
+admin.services.field_current,Current:,தற்போதைய:
+admin.services.cancel,Cancel,ரத்து செய்
+admin.services.update,Update,புதுப்பி
+admin.services.create,Create,உருவாக்கு
+admin.services.updated,Service updated successfully!,சேவை வெற்றிகரமாக புதுப்பிக்கப்பட்டது!
+admin.services.created,Service created successfully!,சேவை வெற்றிகரமாக உருவாக்கப்பட்டது!
+admin.services.deleted,Service deleted.,சேவை நீக்கப்பட்டது.
+admin.services.confirm_delete,Are you sure you want to delete this service?,இந்த சேவையை நீக்க விரும்புகிறீர்களா?
+
+# Manage Providers (Admin)
+admin.providers.title,Manage Providers,வழங்குநர்களை நிர்வகி
+admin.providers.subtitle,Add, edit and manage service providers,சேவை வழங்குநர்களைச் சேர்க்கவும் திருத்தவும் நிர்வகிக்கவும்
+admin.providers.add_btn,+ Add Provider,+ வழங்குநரைச் சேர்
+admin.providers.table_id,#,#
+admin.providers.table_name,Name,பெயர்
+admin.providers.table_skill,Skill Type,திறன் வகை
+admin.providers.table_phone,Phone,தொலைபேசி
+admin.providers.table_status,Status,நிலை
+admin.providers.table_actions,Actions,செயல்கள்
+admin.providers.edit,✏️ Edit,✏️ திருத்து
+admin.providers.delete,🗑️ Delete,🗑️ நீக்கு
+admin.providers.none,No providers found.,வழங்குநர்கள் எதுவும் இல்லை.
+admin.providers.modal_add,➕ Add Provider,➕ வழங்குநரைச் சேர்
+admin.providers.modal_edit,✏️ Edit Provider,✏️ வழங்குநரைத் திருத்து
+admin.providers.field_name,Full Name,முழு பெயர்
+admin.providers.field_name_placeholder,Provider name,வழங்குநர் பெயர்
+admin.providers.field_skill,Skill Type,திறன் வகை
+admin.providers.field_skill_placeholder,e.g. Home Cleaning,எ.கா. வீட்டை சுத்தம் செய்தல்
+admin.providers.field_phone,Phone Number,தொலைபேசி எண்
+admin.providers.field_phone_placeholder,555-0100,555-0100
+admin.providers.field_availability,Availability Status,கிடைக்கும் தன்மை
+admin.providers.field_image,Profile Image,சுயவிவர படம்
+admin.providers.field_current,Current:,தற்போதைய:
+admin.providers.cancel,Cancel,ரத்து செய்
+admin.providers.update,Update,புதுப்பி
+admin.providers.add_provider,Add Provider,வழங்குநரைச் சேர்
+admin.providers.updated,Provider updated!,வழங்குநர் புதுப்பிக்கப்பட்டார்!
+admin.providers.created,Provider added!,வழங்குநர் சேர்க்கப்பட்டார்!
+admin.providers.deleted,Provider deleted.,வழங்குநர் நீக்கப்பட்டார்.
+admin.providers.confirm_delete,Delete this provider?,இந்த வழங்குநரை நீக்கவா?
+
+# Manage Bookings (Admin)
+admin.bookings.title,Manage Bookings,முன்பதிவுகளை நிர்வகி
+admin.bookings.subtitle,View and update all booking statuses,அனைத்து முன்பதிவு நிலைகளையும் காண்க மற்றும் புதுப்பிக்கவும்
+admin.bookings.filter_all,All,அனைத்தும்
+admin.bookings.filter_pending,Pending,நிலுவையில்
+admin.bookings.filter_confirmed,Confirmed,உறுதி செய்யப்பட்டது
+admin.bookings.filter_completed,Completed,நிறைவடைந்தது
+admin.bookings.filter_cancelled,Cancelled,ரத்து செய்யப்பட்டது
+admin.bookings.table_id,#,#
+admin.bookings.table_customer,Customer,வாடிக்கையாளர்
+admin.bookings.table_service,Service,சேவை
+admin.bookings.table_provider,Provider,வழங்குநர்
+admin.bookings.table_date,Date,தேதி
+admin.bookings.table_address,Address,முகவரி
+admin.bookings.table_status,Status,நிலை
+admin.bookings.table_action,Action,செயல்
+admin.bookings.status_btn,✏️ Status,✏️ நிலை
+admin.bookings.none,No bookings found.,முன்பதிவுகள் எதுவும் இல்லை.
+admin.bookings.showing,Showing {{count}} of {{total}} bookings,{{count}} / {{total}} முன்பதிவுகள் காட்டப்படுகின்றன
+admin.bookings.prev,← Prev,← முந்தைய
+admin.bookings.next,Next →,அடுத்து →
+admin.bookings.modal_title,Update Booking Status,முன்பதிவு நிலையை புதுப்பிக்கவும்
+admin.bookings.modal_booking,Booking,முன்பதிவு
+admin.bookings.cancel,Cancel,ரத்து செய்
+admin.bookings.update_btn,Update Status,நிலையை புதுப்பி
+admin.bookings.updated,Booking status updated!,முன்பதிவு நிலை புதுப்பிக்கப்பட்டது!
+
+# Status labels (StatusBadge)
+status.pending,⏳ Pending,⏳ நிலுவையில்
+status.confirmed,✅ Confirmed,✅ உறுதி செய்யப்பட்டது
+status.completed,🎉 Completed,🎉 நிறைவடைந்தது
+status.cancelled,❌ Cancelled,❌ ரத்து செய்யப்பட்டது
+status.available,🟢 Available,🟢 கிடைக்கும்
+status.not_available,🔴 Not Available,🔴 கிடைக்காது
+
+# Common
+common.loading,Loading...,ஏற்றப்படுகிறது...
+common.bookease,BookEase,BookEase
+common.user_role,Role,பங்கு
+
+# Unauthorized
+unauthorized.title,Access Denied,அணுகல் மறுக்கப்பட்டது
+unauthorized.message,You don't have permission to view this page. This area is restricted to authorized personnel only.,இந்தப் பக்கத்தைப் பார்க்க உங்களுக்கு அனுமதி இல்லை. இந்தப் பகுதி அங்கீகரிக்கப்பட்ட பணியாளர்களுக்கு மட்டுமே.
+unauthorized.go_back,← Go Back,← பின்செல்
+unauthorized.switch_account,Sign in with different account,வேறு கணக்கில் உள்நுழைக
+unauthorized.contact_admin,If you believe this is an error, please contact your administrator.,இது பிழை என்று நினைத்தால், உங்கள் நிர்வாகியைத் தொடர்பு கொள்ளவும்.
+
+# Success Modal
+success.title,Success!,வெற்றி!
+success.message,Operation completed successfully.,செயல்பாடு வெற்றிகரமாக முடிந்தது.
+success.view_bookings,View My Bookings →,எனது முன்பதிவுகளைக் காண்க →
+success.close,Close,மூடு
+
+# Errors
+error.welcome_back,Welcome back! 👋,மீண்டும் வரவேற்கிறோம்! 👋
+error.verify_email,Please verify your email first.,தயவுசெய்து முதலில் உங்கள் மின்னஞ்சலை சரிபார்க்கவும்.
+error.no_email_found,No email found.,மின்னஞ்சல் எதுவும் இல்லை.
+error.booking_failed,Failed to create booking,முன்பதிவை உருவாக்க முடியவில்லை
+error.operation_failed,Operation failed,செயல்பாடு தோல்வியடைந்தது
+error.delete_failed,Delete failed
+
+
+
+# Error fallback messages
+error.login_failed,Login failed,உள்நுழைவு தோல்வி
+error.registration_failed,Registration failed,பதிவு தோல்வி
+error.verification_failed,Verification failed,சரிபார்ப்பு தோல்வி
+error.resend_failed,Failed to resend code,குறியீட்டை மீண்டும் அனுப்ப முடியவில்லை
+error.unexpected,An unexpected error occurred.,எதிர்பாராத பிழை ஏற்பட்டது
+
+# Auth register success toast
+auth.register.success,Account created! Check your email for the verification code.,கணக்கு உருவாக்கப்பட்டது! சரிபார்ப்புக் குறியீட்டிற்கு உங்கள் மின்னஞ்சலைச் சரிபார்க்கவும்
+
+# Sidebar language
+sidebar.language,Language / மொழி,Language / மொழி
+lang.en,English,ஆங்கிலம்
+lang.ta,தமிழ்,தமிழ்
+
+# Admin pagination
+admin.services.prev,← Prev,← முந்தைய
+admin.services.next,Next →,அடுத்து →
+admin.providers.prev,← Prev,← முந்தைய
+admin.providers.next,Next →,அடுத்து →

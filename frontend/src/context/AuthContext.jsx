@@ -1,5 +1,6 @@
 import { createContext, useContext, useState } from 'react';
 import api from '../api/axios';
+import i18n from '../i18n';
 
 const AuthContext = createContext(null);
 
@@ -30,7 +31,7 @@ export const AuthProvider = ({ children }) => {
       if (data.needsVerification) {
         return { success: false, needsVerification: true, email: data.email, message: data.message };
       }
-      return { success: false, message: data.message || 'Login failed' };
+      return { success: false, message: data.message || i18n.t('error.login_failed') };
     } finally {
       setLoading(false);
     }
@@ -42,7 +43,7 @@ export const AuthProvider = ({ children }) => {
       const res = await api.post('/auth/register', { name, email, password });
       return { success: true, email: res.data.email, message: res.data.message };
     } catch (err) {
-      const message = err.response?.data?.message || 'Registration failed';
+      const message = err.response?.data?.message || i18n.t('error.registration_failed');
       return { success: false, message };
     } finally {
       setLoading(false);
@@ -60,7 +61,7 @@ export const AuthProvider = ({ children }) => {
       setUser(user);
       return { success: true, role: user.role };
     } catch (err) {
-      const message = err.response?.data?.message || 'Verification failed';
+      const message = err.response?.data?.message || i18n.t('error.verification_failed');
       return { success: false, message };
     } finally {
       setLoading(false);
@@ -73,7 +74,7 @@ export const AuthProvider = ({ children }) => {
       await api.post('/auth/resend-code', { email });
       return { success: true };
     } catch (err) {
-      const message = err.response?.data?.message || 'Failed to resend code';
+      const message = err.response?.data?.message || i18n.t('error.resend_failed');
       return { success: false, message };
     } finally {
       setLoading(false);

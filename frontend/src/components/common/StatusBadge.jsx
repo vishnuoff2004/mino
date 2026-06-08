@@ -1,4 +1,8 @@
+import { useTranslation } from 'react-i18next';
+
 const StatusBadge = ({ status }) => {
+  const { t } = useTranslation();
+
   const statusMap = {
     pending: 'badge-pending',
     confirmed: 'badge-confirmed',
@@ -9,12 +13,12 @@ const StatusBadge = ({ status }) => {
   };
 
   const labelMap = {
-    pending: '⏳ Pending',
-    confirmed: '✅ Confirmed',
-    completed: '🎉 Completed',
-    cancelled: '❌ Cancelled',
-    available: '🟢 Available',
-    not_available: '🔴 Not Available',
+    pending: t('status.pending'),
+    confirmed: t('status.confirmed'),
+    completed: t('status.completed'),
+    cancelled: t('status.cancelled'),
+    available: t('status.available'),
+    not_available: t('status.not_available'),
   };
 
   const cls = statusMap[status] || 'badge bg-gray-100 text-gray-700';

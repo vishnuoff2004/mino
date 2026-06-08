@@ -1,23 +1,30 @@
 import { NavLink } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useAuth } from '../../context/AuthContext';
+import { useTranslation } from 'react-i18next';
 
 const userLinks = [
-  { to: '/dashboard', icon: '📊', label: 'Dashboard' },
-  { to: '/services', icon: '🛠️', label: 'Services' },
-  { to: '/bookings', icon: '📋', label: 'My Bookings' },
+  { to: '/dashboard', icon: '📊', labelKey: 'sidebar.dashboard' },
+  { to: '/services', icon: '🛠️', labelKey: 'sidebar.services' },
+  { to: '/bookings', icon: '📋', labelKey: 'sidebar.bookings' },
 ];
 
 const adminLinks = [
-  { to: '/admin', icon: '📊', label: 'Dashboard', end: true },
-  { to: '/admin/services', icon: '🛠️', label: 'Manage Services' },
-  { to: '/admin/providers', icon: '👷', label: 'Manage Providers' },
-  { to: '/admin/bookings', icon: '📋', label: 'Manage Bookings' },
+  { to: '/admin', icon: '📊', labelKey: 'sidebar.dashboard', end: true },
+  { to: '/admin/services', icon: '🛠️', labelKey: 'sidebar.manage_services' },
+  { to: '/admin/providers', icon: '👷', labelKey: 'sidebar.manage_providers' },
+  { to: '/admin/bookings', icon: '📋', labelKey: 'sidebar.manage_bookings' },
 ];
 
 const Sidebar = ({ isOpen, onClose }) => {
   const { isAdmin } = useAuth();
+  const { t, i18n } = useTranslation();
   const links = isAdmin ? adminLinks : userLinks;
+
+  const changeLanguage = (lng) => {
+    i18n.changeLanguage(lng);
+    localStorage.setItem('i18nextLng', lng);
+  };
 
   return (
     <>
@@ -47,9 +54,9 @@ const Sidebar = ({ isOpen, onClose }) => {
       >
         <nav className="flex-1 p-4 space-y-1" >
           <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider px-4 mb-3">
-            {isAdmin ? 'Admin Panel' : 'Navigation'}
+            {isAdmin ? t('sidebar.admin_panel') : t('sidebar.navigation')}
           </p>
-          {links.map(({ to, icon, label, end }) => (
+          {links.map(({ to, icon, labelKey, end }) => (
             <NavLink
               key={to}
               to={to}
@@ -60,15 +67,44 @@ const Sidebar = ({ isOpen, onClose }) => {
               }
             >
               <span className="text-lg">{icon}</span>
-              <span>{label}</span>
+              <span>{t(labelKey)}</span>
             </NavLink>
           ))}
         </nav>
 
+        {/* Language Switcher */}
+        <div className="p-4 border-t border-cream-100">
+          <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider px-1 mb-2">
+            {t('sidebar.language')}
+          </p>
+          <div className="flex gap-2 px-1">
+            <button
+              onClick={() => changeLanguage('en')}
+              className={`flex-1 py-1.5 px-3 rounded-xl text-sm font-semibold transition-all ${
+                i18n.language === 'en'
+                  ? 'bg-gradient-to-r from-orange-400 to-pink-400 text-white shadow-md'
+                  : 'bg-cream-50 text-gray-600 hover:bg-cream-100'
+              }`}
+            >
+              🇬🇧 {t('lang.en')}
+            </button>
+            <button
+              onClick={() => changeLanguage('ta')}
+              className={`flex-1 py-1.5 px-3 rounded-xl text-sm font-semibold transition-all ${
+                i18n.language === 'ta'
+                  ? 'bg-gradient-to-r from-orange-400 to-pink-400 text-white shadow-md'
+                  : 'bg-cream-50 text-gray-600 hover:bg-cream-100'
+              }`}
+            >
+              🇮🇳 {t('lang.ta')}
+            </button>
+          </div>
+        </div>
+
         {/* Footer */}
         <div className="p-4 border-t border-cream-100">
           <div className="text-xs text-gray-400 text-center">
-            BookEase v1.0 · Built with ❤️
+            {t('sidebar.footer')}
           </div>
         </div>
       </aside>

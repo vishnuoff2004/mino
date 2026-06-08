@@ -18,6 +18,7 @@ const serviceRoutes = require('./routes/services');
 const providerRoutes = require('./routes/providers');
 const bookingRoutes = require('./routes/bookings');
 const adminRoutes = require('./routes/admin');
+const uploadRoutes = require('./routes/upload');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -49,6 +50,7 @@ app.use('/api/services', serviceRoutes);
 app.use('/api/providers', providerRoutes);
 app.use('/api/bookings', bookingRoutes);
 app.use('/api/admin', adminRoutes);
+app.use('/api/upload', uploadRoutes);
 
 // 404 handler
 app.use((req, res) => {

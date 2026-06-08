@@ -1,24 +1,28 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { motion, AnimatePresence } from 'framer-motion';
 import api from '../../api/axios';
 import toast from 'react-hot-toast';
+import { useTranslation } from 'react-i18next';
+import { tl } from '../../utils/translate';
 import LoadingSpinner from '../../components/common/LoadingSpinner';
 import StatusBadge from '../../components/common/StatusBadge';
 import { SkeletonTable } from '../../components/common/SkeletonCard';
 
-const schema = yup.object({
-  name: yup.string().min(2).required('Name is required'),
-  skill_type: yup.string().required('Skill type is required'),
-  phoneno: yup.string().min(7).required('Phone number is required'),
-  availabilitystatus: yup.string().oneOf(['available', 'not_available']).required(),
-});
-
 const ProviderModal = ({ provider, onClose, onSave }) => {
+  const { t } = useTranslation();
   const isEdit = !!provider;
   const [submitting, setSubmitting] = useState(false);
+  const [imageFile, setImageFile] = useState(null);
+
+  const schema = useMemo(() => yup.object({
+    name: yup.string().min(2).required(t('validation.name_required_admin')),
+    skill_type: yup.string().required(t('validation.skill_type_required')),
+    phoneno: yup.string().min(7).required(t('validation.phone_required')),
+    availabilitystatus: yup.string().oneOf(['available', 'not_available']).required(),
+  }), [t]);
 
   const { register, handleSubmit, formState: { errors } } = useForm({
     resolver: yupResolver(schema),
@@ -28,17 +32,28 @@ const ProviderModal = ({ provider, onClose, onSave }) => {
   const onSubmit = async (data) => {
     setSubmitting(true);
     try {
+      const formData = new FormData();
+      formData.append('name', data.name);
+      formData.append('skill_type', data.skill_type);
+      formData.append('phoneno', data.phoneno);
+      formData.append('availabilitystatus', data.availabilitystatus);
+      if (imageFile) {
+        formData.append('profile_image', imageFile);
+      }
+
+      const config = { headers: { 'Content-Type': 'multipart/form-data' } };
+
       if (isEdit) {
-        await api.put(`/providers/${provider.id}`, data);
-        toast.success('Provider updated!');
+        await api.put(`/providers/${provider.id}`, formData, config);
+        toast.success(t('admin.providers.updated'));
       } else {
-        await api.post('/providers', data);
-        toast.success('Provider added!');
+        await api.post('/providers', formData, config);
+        toast.success(t('admin.providers.created'));
       }
       onSave();
       onClose();
     } catch (err) {
-      toast.error(err.response?.data?.message || 'Operation failed');
+      toast.error(err.response?.data?.message || t('error.operation_failed'));
     } finally {
       setSubmitting(false);
     }
@@ -57,39 +72,53 @@ const ProviderModal = ({ provider, onClose, onSave }) => {
         animate={{ scale: 1, opacity: 1 }}
         exit={{ scale: 0.9, opacity: 0 }}
         onClick={(e) => e.stopPropagation()}
-        className="bg-white rounded-3xl shadow-2xl p-6 w-full max-w-md"
+        className="bg-white rounded-3xl shadow-2xl p-6 w-full max-w-lg max-h-[90vh] overflow-y-auto"
       >
         <h2 className="text-xl font-bold text-gray-800 mb-5">
-          {isEdit ? '✏️ Edit Provider' : '➕ Add Provider'}
+          {isEdit ? t('admin.providers.modal_edit') : t('admin.providers.modal_add')}
         </h2>
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           <div>
-            <label className="label">Full Name</label>
-            <input placeholder="Provider name" className={`input-field ${errors.name ? 'border-red-400' : ''}`} {...register('name')} />
+            <label className="label">{t('admin.providers.field_name')}</label>
+            <input placeholder={t('admin.providers.field_name_placeholder')} className={`input-field ${errors.name ? 'border-red-400' : ''}`} {...register('name')} />
             {errors.name && <p className="error-text">{errors.name.message}</p>}
           </div>
+
           <div>
-            <label className="label">Skill Type</label>
-            <input placeholder="e.g. Home Cleaning" className={`input-field ${errors.skill_type ? 'border-red-400' : ''}`} {...register('skill_type')} />
+            <label className="label">{t('admin.providers.field_skill')}</label>
+            <input placeholder={t('admin.providers.field_skill_placeholder')} className={`input-field ${errors.skill_type ? 'border-red-400' : ''}`} {...register('skill_type')} />
             {errors.skill_type && <p className="error-text">{errors.skill_type.message}</p>}
           </div>
+
           <div>
-            <label className="label">Phone Number</label>
-            <input placeholder="555-0100" className={`input-field ${errors.phoneno ? 'border-red-400' : ''}`} {...register('phoneno')} />
+            <label className="label">{t('admin.providers.field_phone')}</label>
+            <input placeholder={t('admin.providers.field_phone_placeholder')} className={`input-field ${errors.phoneno ? 'border-red-400' : ''}`} {...register('phoneno')} />
             {errors.phoneno && <p className="error-text">{errors.phoneno.message}</p>}
           </div>
           <div>
-            <label className="label">Availability Status</label>
+            <label className="label">{t('admin.providers.field_availability')}</label>
             <select className={`input-field ${errors.availabilitystatus ? 'border-red-400' : ''}`} {...register('availabilitystatus')}>
-              <option value="available">🟢 Available</option>
-              <option value="not_available">🔴 Not Available</option>
+              <option value="available">{t('status.available')}</option>
+              <option value="not_available">{t('status.not_available')}</option>
             </select>
             {errors.availabilitystatus && <p className="error-text">{errors.availabilitystatus.message}</p>}
           </div>
+          <div>
+            <label className="label">{t('admin.providers.field_image')}</label>
+            <input
+              type="file"
+              accept="image/*"
+              className="input-field file:mr-3 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:bg-purple-50 file:text-purple-700 file:text-sm file:font-semibold hover:file:bg-purple-100"
+              onChange={(e) => setImageFile(e.target.files[0])}
+            />
+            {provider?.profile_image && (
+              <p className="text-xs text-gray-400 mt-1">{t('admin.providers.field_current')} {provider.profile_image.split('/').pop()}</p>
+            )}
+          </div>
           <div className="flex gap-3 pt-2">
-            <button type="button" onClick={onClose} className="btn-secondary flex-1">Cancel</button>
+            <button type="button" onClick={onClose} className="btn-secondary flex-1">{t('admin.providers.cancel')}</button>
             <button type="submit" disabled={submitting} className="btn-primary flex-1">
-              {submitting ? <LoadingSpinner size="sm" /> : isEdit ? 'Update' : 'Add Provider'}
+              {submitting ? <LoadingSpinner size="sm" /> : isEdit ? t('admin.providers.update') : t('admin.providers.add_provider')}
             </button>
           </div>
         </form>
@@ -99,6 +128,7 @@ const ProviderModal = ({ provider, onClose, onSave }) => {
 };
 
 const ManageProviders = () => {
+  const { t, i18n } = useTranslation();
   const [providers, setProviders] = useState([]);
   const [loading, setLoading] = useState(true);
   const [modalOpen, setModalOpen] = useState(false);
@@ -123,28 +153,30 @@ const ManageProviders = () => {
   useEffect(() => { fetchProviders(); }, [page]);
 
   const handleDelete = async (id) => {
-    if (!window.confirm('Delete this provider?')) return;
+    if (!window.confirm(t('admin.providers.confirm_delete'))) return;
     setDeletingId(id);
     try {
       await api.delete(`/providers/${id}`);
-      toast.success('Provider deleted.');
+      toast.success(t('admin.providers.deleted'));
       fetchProviders();
     } catch (err) {
-      toast.error(err.response?.data?.message || 'Delete failed');
+      toast.error(err.response?.data?.message || t('error.delete_failed'));
     } finally {
       setDeletingId(null);
     }
   };
 
+  const lang = i18n.language;
+
   return (
     <div className="space-y-6 animate-fade-in">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="page-title">Manage Providers</h1>
-          <p className="section-subtitle">Add, edit and manage service providers</p>
+          <h1 className="page-title">{t('admin.providers.title')}</h1>
+          <p className="section-subtitle">{t('admin.providers.subtitle')}</p>
         </div>
         <button id="add-provider-btn" onClick={() => { setEditProvider(null); setModalOpen(true); }} className="btn-primary">
-          + Add Provider
+          {t('admin.providers.add_btn')}
         </button>
       </div>
 
@@ -156,7 +188,7 @@ const ManageProviders = () => {
             <table className="w-full">
               <thead className="bg-cream-50 border-b border-cream-200">
                 <tr>
-                  {['#', 'Name', 'Skill Type', 'Phone', 'Status', 'Actions'].map((h) => (
+                  {[t('admin.providers.table_id'), t('admin.providers.table_name'), t('admin.providers.table_skill'), t('admin.providers.table_phone'), t('admin.providers.table_status'), t('admin.providers.table_actions')].map((h) => (
                     <th key={h} className="text-left px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider">{h}</th>
                   ))}
                 </tr>
@@ -167,11 +199,17 @@ const ManageProviders = () => {
                     <td className="px-4 py-4 text-sm text-gray-400 font-mono">#{provider.id}</td>
                     <td className="px-4 py-4">
                       <div className="flex items-center gap-2">
-                        <div className="w-8 h-8 rounded-full bg-gradient-to-br from-purple-200 to-blue-200 flex items-center justify-center text-sm">👷</div>
-                        <span className="font-semibold text-gray-800">{provider.name}</span>
+                        <div className="w-8 h-8 rounded-full bg-gradient-to-br from-purple-200 to-blue-200 flex items-center justify-center text-sm overflow-hidden">
+                          {provider.profile_image ? (
+                            <img src={provider.profile_image} alt="" className="w-full h-full object-cover" />
+                          ) : (
+                            '👷'
+                          )}
+                        </div>
+                        <span className="font-semibold text-gray-800">{tl(provider, 'name', lang, t)}</span>
                       </div>
                     </td>
-                    <td className="px-4 py-4 text-sm text-gray-600">{provider.skill_type}</td>
+                    <td className="px-4 py-4 text-sm text-gray-600">{tl(provider, 'skill_type', lang, t)}</td>
                     <td className="px-4 py-4 text-sm text-gray-600">{provider.phoneno}</td>
                     <td className="px-4 py-4">
                       <StatusBadge status={provider.availabilitystatus} />
@@ -183,7 +221,7 @@ const ManageProviders = () => {
                           onClick={() => { setEditProvider(provider); setModalOpen(true); }}
                           className="px-3 py-1.5 rounded-lg bg-blue-50 text-blue-600 text-xs font-semibold hover:bg-blue-100 transition-colors"
                         >
-                          ✏️ Edit
+                          {t('admin.providers.edit')}
                         </button>
                         <button
                           id={`delete-provider-${provider.id}`}
@@ -191,7 +229,7 @@ const ManageProviders = () => {
                           disabled={deletingId === provider.id}
                           className="px-3 py-1.5 rounded-lg bg-red-50 text-red-600 text-xs font-semibold hover:bg-red-100 transition-colors disabled:opacity-60"
                         >
-                          {deletingId === provider.id ? <LoadingSpinner size="sm" /> : '🗑️ Delete'}
+                          {deletingId === provider.id ? <LoadingSpinner size="sm" /> : t('admin.providers.delete')}
                         </button>
                       </div>
                     </td>
@@ -200,7 +238,7 @@ const ManageProviders = () => {
               </tbody>
             </table>
             {providers.length === 0 && (
-              <div className="text-center py-10 text-gray-500">No providers found.</div>
+              <div className="text-center py-10 text-gray-500">{t('admin.providers.none')}</div>
             )}
           </div>
         </div>
@@ -208,10 +246,10 @@ const ManageProviders = () => {
 
       {pagination.totalPages > 1 && (
         <div className="flex items-center justify-between">
-          <p className="text-sm text-gray-500">Page {page} of {pagination.totalPages}</p>
+          <p className="text-sm text-gray-500">{t('services.page_info', { page, totalPages: pagination.totalPages })}</p>
           <div className="flex gap-2">
-            <button disabled={page === 1} onClick={() => setPage((p) => p - 1)} className="btn-secondary disabled:opacity-50 px-4 py-2 text-sm">← Prev</button>
-            <button disabled={page === pagination.totalPages} onClick={() => setPage((p) => p + 1)} className="btn-secondary disabled:opacity-50 px-4 py-2 text-sm">Next →</button>
+            <button disabled={page === 1} onClick={() => setPage((p) => p - 1)} className="btn-secondary disabled:opacity-50 px-4 py-2 text-sm">{t('admin.providers.prev')}</button>
+            <button disabled={page === pagination.totalPages} onClick={() => setPage((p) => p + 1)} className="btn-secondary disabled:opacity-50 px-4 py-2 text-sm">{t('admin.providers.next')}</button>
           </div>
         </div>
       )}

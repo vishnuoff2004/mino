@@ -15,10 +15,13 @@
     "@sentry/react": "^10.56.0",
     "axios": "^1.16.1",
     "framer-motion": "^12.40.0",
+    "i18next": "^26.3.1",
+    "papaparse": "^5.5.3",
     "react": "^19.2.6",
     "react-dom": "^19.2.6",
     "react-hook-form": "^7.76.1",
     "react-hot-toast": "^2.6.0",
+    "react-i18next": "^17.0.8",
     "react-router-dom": "^7.16.0",
     "yup": "^1.7.1"
   },

@@ -3,9 +3,12 @@ import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import api from '../../api/axios';
 import useDebounce from '../../hooks/useDebounce';
+import { useTranslation } from 'react-i18next';
+import { tl } from '../../utils/translate';
 import SkeletonCard from '../../components/common/SkeletonCard';
 
 const Services = () => {
+  const { t, i18n } = useTranslation();
   const [services, setServices] = useState([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
@@ -40,12 +43,14 @@ const Services = () => {
     navigate('/providers', { state: { service } });
   };
 
+  const lang = i18n.language;
+
   return (
     <div className="space-y-6 animate-fade-in">
       {/* Header */}
       <div>
-        <h1 className="page-title">Our Services</h1>
-        <p className="section-subtitle">Find the perfect service for your needs</p>
+        <h1 className="page-title">{t('services.title')}</h1>
+        <p className="section-subtitle">{t('services.subtitle')}</p>
       </div>
 
       {/* Search */}
@@ -54,7 +59,7 @@ const Services = () => {
         <input
           id="services-search"
           type="text"
-          placeholder="Search services..."
+          placeholder={t('services.search')}
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           className="inp pl-12 ml-9 bg-transparent"
@@ -78,10 +83,10 @@ const Services = () => {
       ) : services.length === 0 ? (
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-center py-16">
           <span className="text-6xl">🔍</span>
-          <p className="mt-4 text-xl font-semibold text-gray-700">No services found</p>
-          <p className="text-gray-500 mt-1">Try a different search term</p>
+          <p className="mt-4 text-xl font-semibold text-gray-700">{t('services.none_found')}</p>
+          <p className="text-gray-500 mt-1">{t('services.none_found_desc')}</p>
           <button onClick={() => setSearch('')} className="btn-secondary mt-4">
-            Clear search
+            {t('services.clear_search')}
           </button>
         </motion.div>
       ) : (
@@ -100,10 +105,20 @@ const Services = () => {
                   🛠️
                 </div>
 
-                <h3 className="text-lg font-bold text-gray-800 mb-2">{service.name}</h3>
-                <p className="text-gray-500 text-sm flex-1 line-clamp-3">{service.description}</p>
+                <h3 className="text-lg font-bold text-gray-800 mb-2">{tl(service, 'name', lang, t)}</h3>
+                <p className="text-gray-500 text-sm flex-1 line-clamp-3">{tl(service, 'description', lang, t)}</p>
 
-                <div className="mt-4 flex items-center justify-between">
+                  {service.document_url && (
+                    <a
+                      href={service.document_url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-xs text-purple-600 underline hover:text-purple-800 mt-2 inline-block"
+                    >
+                      {t('services.view_document')}
+                    </a>
+                  )}
+                  <div className="mt-4 flex items-center justify-between">
                   <div>
                     <p className="text-2xl font-bold text-orange-500">
                       ${parseFloat(service.price).toFixed(2)}
@@ -119,7 +134,7 @@ const Services = () => {
                   onClick={() => handleBookNow(service)}
                   className="btn-primary w-full mt-4"
                 >
-                  Book Now
+                  {t('services.book_now')}
                 </button>
               </motion.div>
             ))}
@@ -136,7 +151,7 @@ const Services = () => {
                 ←
               </button>
               <span className="text-sm text-gray-600 font-medium px-4">
-                Page {page} of {pagination.totalPages}
+                {t('services.page_info', { page, totalPages: pagination.totalPages })}
               </span>
               <button
                 disabled={page === pagination.totalPages}

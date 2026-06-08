@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
@@ -5,24 +6,26 @@ import { Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useAuth } from '../../context/AuthContext';
 import toast from 'react-hot-toast';
+import { useTranslation } from 'react-i18next';
 import LoadingSpinner from '../../components/common/LoadingSpinner';
 
-const schema = yup.object({
-  name: yup.string().min(2, 'Name must be at least 2 characters').max(100).required('Name is required'),
-  email: yup.string().email('Invalid email address').required('Email is required'),
-  password: yup
-    .string()
-    .min(6, 'Password must be at least 6 characters')
-    .required('Password is required'),
-  confirmPassword: yup
-    .string()
-    .oneOf([yup.ref('password')], 'Passwords do not match')
-    .required('Please confirm your password'),
-});
-
 const Register = () => {
+  const { t } = useTranslation();
   const { register: registerUser, loading } = useAuth();
   const navigate = useNavigate();
+
+  const schema = useMemo(() => yup.object({
+    name: yup.string().min(2, t('validation.name_min')).max(100).required(t('validation.name_required')),
+    email: yup.string().email(t('validation.email_invalid')).required(t('validation.email_required')),
+    password: yup
+      .string()
+      .min(6, t('validation.password_min'))
+      .required(t('validation.password_required')),
+    confirmPassword: yup
+      .string()
+      .oneOf([yup.ref('password')], t('validation.confirm_match'))
+      .required(t('validation.confirm_required')),
+  }), [t]);
 
   const {
     register,
@@ -33,10 +36,10 @@ const Register = () => {
   const onSubmit = async (data) => {
     const result = await registerUser(data.name, data.email, data.password);
     if (result.success) {
-      toast.success('Account created! Check your email for the verification code.');
+      toast.success(t('auth.register.success'));
       navigate('/verify-email', { state: { email: result.email } });
     } else {
-      toast.error(result.message);
+      toast.error(result.message || t('error.registration_failed'));
     }
   };
 
@@ -52,8 +55,8 @@ const Register = () => {
           <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-gradient-to-br from-orange-400 to-pink-400 flex items-center justify-center shadow-lg">
             <span className="text-3xl">🗓️</span>
           </div>
-          <h1 className="text-3xl font-bold text-gray-800">BookEase</h1>
-          <p className="text-gray-500 mt-1">Join thousands of happy customers</p>
+          <h1 className="text-3xl font-bold text-gray-800">{t('common.bookease')}</h1>
+          <p className="text-gray-500 mt-1">{t('auth.register.subtitle')}</p>
         </motion.div>
 
         <motion.div
@@ -62,16 +65,16 @@ const Register = () => {
           transition={{ delay: 0.1 }}
           className="card shadow-card"
         >
-          <h2 className="text-2xl font-bold text-gray-800 mb-6">Create account</h2>
+          <h2 className="text-2xl font-bold text-gray-800 mb-6">{t('auth.register.heading')}</h2>
 
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-4" noValidate>
             <div>
-              <label htmlFor="reg-name" className="label">Full Name</label>
+              <label htmlFor="reg-name" className="label">{t('auth.register.name_label')}</label>
               <input
                 id="reg-name"
                 type="text"
                 autoComplete="name"
-                placeholder="John Doe"
+                placeholder={t('auth.register.name_placeholder')}
                 className={`input-field ${errors.name ? 'border-red-400' : ''}`}
                 {...register('name')}
               />
@@ -79,12 +82,12 @@ const Register = () => {
             </div>
 
             <div>
-              <label htmlFor="reg-email" className="label">Email address</label>
+              <label htmlFor="reg-email" className="label">{t('auth.register.email_label')}</label>
               <input
                 id="reg-email"
                 type="email"
                 autoComplete="email"
-                placeholder="you@example.com"
+                placeholder={t('auth.register.email_placeholder')}
                 className={`input-field ${errors.email ? 'border-red-400' : ''}`}
                 {...register('email')}
               />
@@ -92,12 +95,12 @@ const Register = () => {
             </div>
 
             <div>
-              <label htmlFor="reg-password" className="label">Password</label>
+              <label htmlFor="reg-password" className="label">{t('auth.register.password_label')}</label>
               <input
                 id="reg-password"
                 type="password"
                 autoComplete="new-password"
-                placeholder="Min 6 characters"
+                placeholder={t('auth.register.password_placeholder')}
                 className={`input-field ${errors.password ? 'border-red-400' : ''}`}
                 {...register('password')}
               />
@@ -105,12 +108,12 @@ const Register = () => {
             </div>
 
             <div>
-              <label htmlFor="reg-confirm-password" className="label">Confirm Password</label>
+              <label htmlFor="reg-confirm-password" className="label">{t('auth.register.confirm_label')}</label>
               <input
                 id="reg-confirm-password"
                 type="password"
                 autoComplete="new-password"
-                placeholder="Repeat your password"
+                placeholder={t('auth.register.confirm_placeholder')}
                 className={`input-field ${errors.confirmPassword ? 'border-red-400' : ''}`}
                 {...register('confirmPassword')}
               />
@@ -128,19 +131,19 @@ const Register = () => {
               {loading ? (
                 <span className="flex items-center justify-center gap-2">
                   <LoadingSpinner size="sm" />
-                  Creating account...
+                  {t('auth.register.creating')}
                 </span>
               ) : (
-                'Create account'
+                t('auth.register.create_btn')
               )}
             </button>
           </form>
 
           <div className="mt-6 text-center">
             <p className="text-gray-500 text-sm">
-              Already have an account?{' '}
+              {t('auth.register.has_account')}{' '}
               <Link to="/login" className="text-orange-500 font-semibold hover:text-orange-600 transition-colors">
-                Sign in
+                {t('auth.register.sign_in')}
               </Link>
             </p>
           </div>
